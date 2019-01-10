@@ -1,0 +1,23 @@
+<!-- views/partials/navbar.handlebars -->
+
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="/">
+                OpenerDota.js
+            </a>
+        </div>
+    </div>
+
+    <div class="container">
+        <ul class="nav navbar-nav navbar-right">
+          {{#if currentUser}}
+            <li><a href="/logout">Logout</a></li>
+            <li>Signed-in as {{currentUser.username}}<li>
+          {{else}}
+            <li><a href="/login">Login</a></li>
+            <li><a href="/sign-up">Sign Up</a></li>
+          {{/if}}
+        </ul>
+    </div>
+</nav>
