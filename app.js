@@ -1,9 +1,16 @@
+let player_id = document.getElementById('id-input');
+let hero_id = document.getElementById('hero-input');
+let item_id = document.getElementById('item-input');
+
+let load_data = document.getElementById('load-button');
+
 var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 const axios = require('axios');
 // Making API calls to opendota
 
 
-let my_id = '84155330';
+//let my_id = '84155330'; //Mine
+//let my_id = '60210210'; //Nate's
 //var id_list = [
 //  '84155330'
   //'59654545'
@@ -18,8 +25,12 @@ let matchIDs = [];
 let matchItemTime = [];
 let matchWin = [];
 
-requestMatchesHero(my_id,98,5).then(data => {
-    
+load_data.addEventListener("click", function(){
+    console.log("this ran")
+    requestMatchesHero(player_id.value,hero_id.value,15,item_id.value).then(data => {
+        console.log(matchItemTime);
+        console.log(matchWin);
+    });
 });
 
 
@@ -40,7 +51,7 @@ function request_player(id) {
 
 
 
-function requestMatchesHero(id, hero_id, days) {
+function requestMatchesHero(id, hero_id, days, item) {
   var url = 'https://api.opendota.com/api/players/' + id + '/matches?hero_id=' + hero_id +'&date=' + days;
   //         https://api.opendota.com/api/players/ 84155330 /matches?hero_id=98
   // console.log(matchData)
@@ -48,10 +59,10 @@ function requestMatchesHero(id, hero_id, days) {
       for(let i = 0; i <responseData.data.length; i++){
           matchIDs.push(responseData.data[i].match_id);
           let matchData = requestMatch(responseData.data[i].match_id);
-          let index = "cake";
+          let index = -999;
 
           for(let playerSlot = 0; playerSlot < 10; playerSlot++){
-              console.log(matchData.players[playerSlot].account_id)
+              //console.log(matchData.players[playerSlot].account_id)
               if(matchData.players[playerSlot].account_id == id){
                 index = playerSlot;
                 // console.log(index)
@@ -63,8 +74,8 @@ function requestMatchesHero(id, hero_id, days) {
 
           let firstPurchases = matchData.players[index].first_purchase_time;
 
-          if(firstPurchases.soul_ring){
-              matchItemTime.push(firstPurchases.soul_ring);
+          if(firstPurchases[item]){
+              matchItemTime.push(firstPurchases[item]);
           }
           matchWin.push(matchData.players[index].win);
       }
