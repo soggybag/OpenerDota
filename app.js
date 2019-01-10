@@ -3,7 +3,7 @@ const axios = require('axios');
 // Making API calls to opendota
 
 
-var my_id = '84155330';
+let my_id = '84155330';
 //var id_list = [
 //  '84155330'
   //'59654545'
@@ -12,10 +12,16 @@ var my_id = '84155330';
   //'78564848'
 //];
 
-var player;
+let player;
 //request_player(my_id);
-requestMatchesHero(my_id,98);
-var matches = [];
+let matchIDs = [];
+let matchItemTime = [];
+let matchWin = [];
+
+requestMatchesHero(my_id,98,5).then(data => {
+    
+});
+
 
 function request_player(id) {
     var url = 'https://api.opendota.com/api/players/' + id;
@@ -34,15 +40,37 @@ function request_player(id) {
 
 
 
-function requestMatchesHero(id, hero_id) {
-  var url = 'https://api.opendota.com/api/players/' + id + '/matches?hero_id=' + hero_id;
+function requestMatchesHero(id, hero_id, days) {
+  var url = 'https://api.opendota.com/api/players/' + id + '/matches?hero_id=' + hero_id +'&date=' + days;
   //         https://api.opendota.com/api/players/ 84155330 /matches?hero_id=98
-  axios.get(url).then(function(responseData){
-      for(var i = 0; i <responseData.data.length; i++){
-          matches.push(responseData.data[i].match_id);
+  // console.log(matchData)
+  return axios.get(url).then(function(responseData){
+      for(let i = 0; i <responseData.data.length; i++){
+          matchIDs.push(responseData.data[i].match_id);
+          let matchData = requestMatch(responseData.data[i].match_id);
+          let index = "cake";
+
+          for(let playerSlot = 0; playerSlot < 10; playerSlot++){
+              console.log(matchData.players[playerSlot].account_id)
+              if(matchData.players[playerSlot].account_id == id){
+                index = playerSlot;
+                // console.log(index)
+                break;
+              }
+          }
+          // console.log("MATCHDATA", matchData.players[index])
+          //console.log(index, matchData.match_id)
+
+          let firstPurchases = matchData.players[index].first_purchase_time;
+
+          if(firstPurchases.soul_ring){
+              matchItemTime.push(firstPurchases.soul_ring);
+          }
+          matchWin.push(matchData.players[index].win);
       }
-      console.log(matches);
+      return;
   })
+
 }
   /*var http_request = new XMLHttpRequest();
   http_request.open("GET", url, false);
@@ -59,7 +87,7 @@ function requestMatch(id){
     http_request.send();
     //console.log(http_request);
     var raw = JSON.parse(http_request.responseText);
-    matches.push(raw);
+    return raw;
 }
 
 // Creating arrays of strings from JSON objects to output in our HTML
