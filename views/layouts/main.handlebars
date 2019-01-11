@@ -36,16 +36,24 @@
 
     <script>
         (() => {
+            // Example of get request sends data via the query string
+
+            // Define some form elements 
             const testForm = document.getElementById('test-form')
             const testName = document.getElementById('test-name')
             const testNumber = document.getElementById('test-number')
+
+            // Handle form submission
             testForm.addEventListener('submit', (e) => {
-                e.preventDefault()
-                const name = testName.value
+                e.preventDefault() // Prevent refreshing the page
+                // Collect form data 
+                const name = testName.value 
                 const number = testNumber.value
+                // Make a request with fetch
                 fetch(`/test-route?name=${name}&number=${number}`).then((res) => {
                     return res.json()
                 }).then((data) => {
+                    // Handle the results
                     console.log(data)
                 }).catch((err) => {
                     console.log('fetch test route error:'+err.message)
@@ -53,34 +61,39 @@
             })
         })()
 
+    (() => {
+        // This section gets the data from your original form
+        // define some form elements 
         const form = document.getElementById('special-form')
         const postPlayer = document.getElementById('post-player')
         const postHero = document.getElementById('post-hero')
         const postItem = document.getElementById('post-item')
-
+        // Handle form submission
         form.addEventListener('submit', (e) => {
-            e.preventDefault()
-
+            e.preventDefault() // Prevent refresh
+            // define some options for the request
             const options = {
-                method: 'post', 
-                body: JSON.stringify({ 
-                    player_id: postPlayer.value, 
+                method: 'post',                  // method is post
+                body: JSON.stringify({           // define the data sent to the server
+                    player_id: postPlayer.value, // These value come from the form
                     hero_id: postHero.value, 
                     item_name: postItem.value
                 }),
                 headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
+                    'Accept': 'application/json',       // Need this to make sure the 
+                    'Content-Type': 'application/json'  // data travels correctly 
                 }
             }
 
+            // Lets look at the request before we send it
             console.log('Sending Data:')
             console.log(options)
 
+            // Make a JS request to a route with the options above
             fetch('./new-data-api', options).then((res) => {
                 return res.json()
             }).then((json) => {
-                // handle json
+                // handle json data returned from the server
                 console.log('=======================')
                 console.log(json)
                 // Deal with JSON here!!!!!!
@@ -89,6 +102,7 @@
                 console.log(err.message)
             })
         })
+    })()
     </script>
 
   </body>

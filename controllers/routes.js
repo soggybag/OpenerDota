@@ -101,6 +101,10 @@ module.exports = app => {
         }
     });
 
+
+    // ==============================================================
+    // Handle requests with JS
+
     app.post('/new-data-api', (req, res) => {
 
         var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
@@ -109,10 +113,11 @@ module.exports = app => {
         let matchItemTime = [];
         let matchWin = [];
 
+        // Collect data send from the browser
         let player = req.body.player_id;
         let hero_id = req.body.hero_id;
         let item_name = req.body.item_name;
-
+        // Lets take a look at this before we work with it. 
         console.log('Recieving Data:')
         console.log(player, hero_id, item_name)
         console.log(req.body)
@@ -135,6 +140,7 @@ module.exports = app => {
                     matchData[Math.floor(matchItemTime[index]/10)].loses += 1;
                 }
             }
+            // Return the data to the browser. 
             res.json({ matchData });
         });
 
