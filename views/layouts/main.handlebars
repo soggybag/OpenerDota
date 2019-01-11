@@ -22,14 +22,11 @@
 
     <script>
         const form = document.getElementById('special-form')
-        console.log('*** Hello ***')
-        console.log(form)
 
         form.addEventListener('submit', (e) => {
             e.preventDefault()
 
-            console.log('Its working????')
-            fetch('/new-data-api').then((res) => {
+            fetch('./new-data-api').then((res) => {
                 return res.json()
             }).then((json) => {
                 // handle json
@@ -37,6 +34,7 @@
                 console.log(json)
                 // Deal with JSON here!!!!!!
             }).catch((err) => {
+                console.log('-- Error --')
                 console.log(err.message)
             })
         })

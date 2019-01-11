@@ -90,7 +90,7 @@ module.exports = app => {
         }
     });
 
-    app.post('/new-data-api', (req, res) => {
+    app.get('/new-data-api', (req, res) => {
 
         var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
         const axios = require('axios');
