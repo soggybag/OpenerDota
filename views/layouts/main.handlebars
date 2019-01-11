@@ -14,6 +14,20 @@
 
       <div class="container">
           {{{body}}}
+
+          <div>
+            <form id="test-form">
+                <div>
+                    <input id="test-name" type="text">
+                </div>
+                <div>
+                    <input id="test-number" type="number">
+                </div>
+                <div>
+                    <input id="" type="submit">
+                </div>
+            </form>
+          </div>
       </div>
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
@@ -21,6 +35,24 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 
     <script>
+        (() => {
+            const testForm = document.getElementById('test-form')
+            const testName = document.getElementById('test-name')
+            const testNumber = document.getElementById('test-number')
+            testForm.addEventListener('submit', (e) => {
+                e.preventDefault()
+                const name = testName.value
+                const number = testNumber.value
+                fetch(`/test-route?name=${name}&number=${number}`).then((res) => {
+                    return res.json()
+                }).then((data) => {
+                    console.log(data)
+                }).catch((err) => {
+                    console.log('fetch test route error:'+err.message)
+                })
+            })
+        })()
+
         const form = document.getElementById('special-form')
 
         form.addEventListener('submit', (e) => {

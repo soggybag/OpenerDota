@@ -1,5 +1,16 @@
 module.exports = app => {
 
+    // Test Route - passes vars via query 'GET' request
+    app.get('/test-route', (req, res) => {
+        const { name, number } = req.query          // Get query vars
+        const suggestedPassword = name + number     // Make some ficticious data
+        const data = { 
+            message:'Your suggested password is',
+            password: suggestedPassword,
+        }
+        res.json(data)
+    })
+
     app.get('/', (req, res) => {
         //var currentUser = req.user;
         //console.log(req.user)
