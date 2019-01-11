@@ -26,5 +26,43 @@
             </div>
         </div>
         <script src="app.js"></script>
+        <script>
+
+            fetch('/data-method?param=value').then((res) => {
+                return res.json()
+            }).then((data) => {
+                // handle daat
+                // create graph from data
+            }).catch((err) => {
+                console.log(err.message)
+            })
+
+        </script>
     <body>
 </html>
+
+<script>
+    let player_id = document.getElementById('id-input');
+    let hero_id = document.getElementById('hero-input');
+    let item_id = document.getElementById('item-input');
+    let load_data = document.getElementById('load-button');
+
+    load_data.addEventListener("click", function(){
+        console.log("this ran")
+        requestMatchesHero(player_id.value,hero_id.value,15,item_id.value).then(data => {
+            console.log(matchItemTime);
+            console.log(matchWin);
+            let matchData = [Math.max(...matchItemTime)/10]
+            for(let i = 0; i<matchData.length; i++){
+                matchData[i] = [2];
+            }
+            for(let index = 0; i<matchItemTime.length; i++){
+                if(matchWin[index] == 1){
+                    matchData[matchItemTime[index]/10][0] += 1;
+                } else {
+                    matchData[matchItemTime[index]/10][1] += 1;
+                }
+            }
+        });
+    });
+</script>
