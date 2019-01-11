@@ -54,11 +54,26 @@
         })()
 
         const form = document.getElementById('special-form')
+        const postPlayer = document.getElementById('post-player')
+        const postHero = document.getElementById('post-hero')
+        const postItem = document.getElementById('post-item')
 
         form.addEventListener('submit', (e) => {
             e.preventDefault()
 
-            fetch('./new-data-api').then((res) => {
+            const options = {
+                method: 'post', 
+                body: JSON.stringify({ 
+                    player_id: postPlayer.value, 
+                    hero_id: postHero.value, 
+                    item_name: postItem
+                })
+            }
+
+            console.log('Sending Data:')
+            console.log(options)
+
+            fetch('./new-data-api', options).then((res) => {
                 return res.json()
             }).then((json) => {
                 // handle json

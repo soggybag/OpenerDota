@@ -101,7 +101,7 @@ module.exports = app => {
         }
     });
 
-    app.get('/new-data-api', (req, res) => {
+    app.post('/new-data-api', (req, res) => {
 
         var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
         const axios = require('axios');
@@ -112,6 +112,10 @@ module.exports = app => {
         let player = req.body.player_id;
         let hero_id = req.body.hero_id;
         let item_name = req.body.item_name;
+
+        console.log('Recieving Data:')
+        console.log(player, hero_id, item_name)
+        console.log(req.body)
 
         requestMatchesHero(player,hero_id,8,item_name).then(data => {
             console.log(matchItemTime);
