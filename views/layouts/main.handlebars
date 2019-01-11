@@ -67,7 +67,11 @@
                     player_id: postPlayer.value, 
                     hero_id: postHero.value, 
                     item_name: postItem.value
-                })
+                }),
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                }
             }
 
             console.log('Sending Data:')

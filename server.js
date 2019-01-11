@@ -10,10 +10,9 @@ const express = require('express')
 const app = express()
 
 // Use Body Parser
-app.use(bodyParser.urlencoded({
-  extended: true
-}));
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
 //app.use(cookieParser());
 
 // Add after body parser initialization!
